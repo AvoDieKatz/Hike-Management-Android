@@ -107,9 +107,4 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
     public int getItemCount() {
         return hikeList.size();
     }
-
-    public void setFilteredList(List<Hike> filteredList) {
-        this.hikeList = filteredList;
-        notifyDataSetChanged();
-    }
 }

@@ -142,12 +142,21 @@ public class HikeListFragment extends Fragment {
 
     private void filterList(String text) {
         List<Hike> filteredList = new ArrayList<>();
-        for (Hike hike: hikeList) {
-            if (hike.getTitle().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(hike);
+
+        if (text.equals("")) {
+            filteredList.addAll(hikeRepository.getHikeList());
+        } else {
+            for (Hike hike: hikeList) {
+                if (hike.getTitle().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(hike);
+                }
             }
-            hikeAdapter.setFilteredList(filteredList);
         }
+            int prevSize = hikeList.size();
+            hikeList.clear();
+            hikeAdapter.notifyItemRangeRemoved(0, prevSize);
+            hikeList.addAll(filteredList);
+            hikeAdapter.notifyItemRangeInserted(0, hikeList.size());
     }
 
     private void addHike() {
@@ -194,6 +203,7 @@ public class HikeListFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Override later after create()
+                // By doing this, we can stop dialog from closing once clicked, used to perform validation
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -208,8 +218,6 @@ public class HikeListFragment extends Fragment {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean wantToClose = false;
-
                 isFormValid = checkValidity();
 
                 if (isFormValid) {
@@ -227,16 +235,10 @@ public class HikeListFragment extends Fragment {
                     newHike.setDescription(descriptionInput.getText().toString());
                     newHike.setParking(parkingInput.isChecked());
 
-                    System.out.println("ADD HIKE = " + newHike);
-
                     createHike(newHike);
-                    wantToClose = true;
                     Snackbar.make(view, "New hike added!", Snackbar.LENGTH_LONG).show();
-                }
-
-
-                if (wantToClose)
                     dialog.dismiss();
+                }
             }
         });
     }

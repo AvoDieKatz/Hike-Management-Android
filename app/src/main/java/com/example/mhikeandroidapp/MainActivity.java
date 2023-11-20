@@ -1,5 +1,7 @@
 package com.example.mhikeandroidapp;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -62,7 +62,7 @@ public class HikeRepositoryImpl  implements HikeRepository {
                 null,
                 null,
                 null,
-                null
+                Hike.COL_ID + " DESC"
         );
 
         if (cursor.moveToFirst()){
