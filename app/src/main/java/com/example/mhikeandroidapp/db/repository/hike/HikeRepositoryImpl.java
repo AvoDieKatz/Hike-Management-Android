@@ -41,9 +41,7 @@ public class HikeRepositoryImpl  implements HikeRepository {
     @Override
     public List<Hike> getHikeList() {
         ArrayList<Hike> hikes = new ArrayList<>();
-
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
         String[] requestedCols = {
                 Hike.COL_ID,
                 Hike.COL_TITLE,
@@ -54,7 +52,6 @@ public class HikeRepositoryImpl  implements HikeRepository {
                 Hike.COL_DIFFICULTY,
                 Hike.COL_DESCRIPTION
         };
-
         Cursor cursor = db.query(
                 Hike.TBL_NAME,
                 requestedCols,
@@ -71,23 +68,16 @@ public class HikeRepositoryImpl  implements HikeRepository {
                 newHike.setId(cursor.getInt(cursor.getColumnIndexOrThrow(Hike.COL_ID)));
                 newHike.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(Hike.COL_TITLE)));
                 newHike.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(Hike.COL_LOCATION)));
-
                 // convert string to date
                 newHike.setDate(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow(Hike.COL_DATE)), DateTimeFormatter.ofPattern("uuuu-MM-dd")));
-
                 // return true/false value based on returned integer
                 newHike.setParking(cursor.getInt(cursor.getColumnIndexOrThrow(Hike.COL_PARKING)) != 0);
-
                 // Set precision
                 newHike.setLength(cursor.getFloat(cursor.getColumnIndexOrThrow(Hike.COL_LENGTH)));
-
                 // cast to byte
                 newHike.setDifficulty((byte) cursor.getInt(cursor.getColumnIndexOrThrow(Hike.COL_DIFFICULTY)));
-
                 newHike.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(Hike.COL_DESCRIPTION)));
-
                 hikes.add(newHike);
-
             }while(cursor.moveToNext());
         }
         return hikes;

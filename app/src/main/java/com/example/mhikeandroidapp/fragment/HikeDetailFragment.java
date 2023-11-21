@@ -71,7 +71,7 @@ public class HikeDetailFragment extends Fragment {
         if (bundle != null) {
             selectedHike = bundle.getParcelable("hikeDetail", Hike.class);
         }
-        return inflater.inflate(R.layout.hike_detail, container,false);
+        return inflater.inflate(R.layout.hike_detail, container, false);
     }
 
     @Override
@@ -180,7 +180,6 @@ public class HikeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 performUpdateDetails();
-//                setLayout("detail");
                 handleReturn();
             }
         });
@@ -196,7 +195,6 @@ public class HikeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setLayout("detail");
-                setDefaultData();
             }
         });
 
@@ -247,9 +245,15 @@ public class HikeDetailFragment extends Fragment {
         dateInput.setText(this.selectedHike.getDate().format(df));
         lengthInput.setText(String.valueOf(this.selectedHike.getLength()));
         switch (this.selectedHike.getDifficulty()) {
-            case 108: difficultInput.check(getView().findViewById(R.id.rad_easy_difficulty).getId());
-            case 109: difficultInput.check(getView().findViewById(R.id.rad_hard_difficulty).getId());
-            case 110: difficultInput.check(getView().findViewById(R.id.rad_medium_difficulty).getId());
+            case 108:
+                difficultInput.check(getView().findViewById(R.id.rad_easy_difficulty).getId());
+                break;
+            case 109:
+                difficultInput.check(getView().findViewById(R.id.rad_hard_difficulty).getId());
+                break;
+            case 110:
+                difficultInput.check(getView().findViewById(R.id.rad_medium_difficulty).getId());
+                break;
             default:
         }
         descriptionInput.setText(this.selectedHike.getDescription());
@@ -332,7 +336,8 @@ public class HikeDetailFragment extends Fragment {
                 .setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) { }
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
                 }).setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -367,7 +372,7 @@ public class HikeDetailFragment extends Fragment {
 
     private void createObservation(ObservationDTO observationDTO) {
         int createdObservationId = observationRepository.createObservation(observationDTO);
-        Observation createdObservation =  observationRepository.getSingleObservation(createdObservationId);
+        Observation createdObservation = observationRepository.getSingleObservation(createdObservationId);
         if (createdObservation != null) {
             observationList.add(0, createdObservation);
             observationAdapter.notifyItemInserted(0);

@@ -26,15 +26,12 @@ public class ObservationRepositoryImpl implements ObservationRepository {
     @Override
     public List<Observation> getHikeObservations(int hikeId) {
         ArrayList<Observation> observations = new ArrayList<>();
-
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
         String[] requestedCols = {
                 Observation.COL_ID,
                 Observation.COL_OBSERVATION,
                 Observation.COL_TIME
         };
-
         Cursor cursor = db.query(
                 Observation.TBL_NAME,
                 requestedCols,
@@ -43,7 +40,6 @@ public class ObservationRepositoryImpl implements ObservationRepository {
                 null,
                 null,
                 Observation.COL_TIME + " DESC");
-
         if (cursor.moveToFirst()) {
             do {
                 Observation newObservation = new Observation();
@@ -53,7 +49,6 @@ public class ObservationRepositoryImpl implements ObservationRepository {
                 observations.add(newObservation);
             } while (cursor.moveToNext());
         }
-
         return observations;
     }
 

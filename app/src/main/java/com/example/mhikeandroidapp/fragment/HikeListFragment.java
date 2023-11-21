@@ -43,6 +43,7 @@ import java.util.Locale;
 public class HikeListFragment extends Fragment {
     private HikeAdapter hikeAdapter;
     private List<Hike> hikeList = new ArrayList<>();
+    private List<Hike> originalList = new ArrayList<>();
     private RecyclerView recyclerView;
     private HikeRepositoryImpl hikeRepository;
     private SearchView searchView;
@@ -69,6 +70,7 @@ public class HikeListFragment extends Fragment {
         hikeRepository = new HikeRepositoryImpl(new DatabaseHelper(requireContext()));
 
         hikeList.addAll(hikeRepository.getHikeList());
+        originalList.addAll(hikeList);
         hikeAdapter = new HikeAdapter(requireContext(), hikeList, requireActivity());
 
         recyclerView = view.findViewById(R.id.recycler_view_hikes);
@@ -142,21 +144,20 @@ public class HikeListFragment extends Fragment {
 
     private void filterList(String text) {
         List<Hike> filteredList = new ArrayList<>();
-
         if (text.equals("")) {
             filteredList.addAll(hikeRepository.getHikeList());
         } else {
-            for (Hike hike: hikeList) {
+            for (Hike hike : originalList) {
                 if (hike.getTitle().toLowerCase().contains(text.toLowerCase())) {
                     filteredList.add(hike);
                 }
             }
         }
-            int prevSize = hikeList.size();
-            hikeList.clear();
-            hikeAdapter.notifyItemRangeRemoved(0, prevSize);
-            hikeList.addAll(filteredList);
-            hikeAdapter.notifyItemRangeInserted(0, hikeList.size());
+        int prevSize = hikeList.size();
+        hikeList.clear();
+        hikeAdapter.notifyItemRangeRemoved(0, prevSize);
+        hikeList.addAll(filteredList);
+        hikeAdapter.notifyItemRangeInserted(0, hikeList.size());
     }
 
     private void addHike() {
@@ -200,17 +201,17 @@ public class HikeListFragment extends Fragment {
         dialogBuilder
                 .setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Override later after create()
-                // By doing this, we can stop dialog from closing once clicked, used to perform validation
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Override later after create()
+                        // By doing this, we can stop dialog from closing once clicked, used to perform validation
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();

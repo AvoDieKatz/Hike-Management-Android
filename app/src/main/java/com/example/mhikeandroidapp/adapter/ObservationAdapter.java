@@ -81,14 +81,11 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
                     fragment.openAddObservationDialog();
                 }
             });
-
         } else {
             Observation observation = observationList.get(position);
             holder.itemView.setId(observation.getId());
-
             holder.getTime().setText(activity.getString(R.string.observation_time, observation.getTime()));
             holder.getObservation().setText(activity.getString(R.string.text, observation.getObservation()));
-
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -96,11 +93,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
                     return true;
                 }
             });
-
-        holder.getTime().setText(activity.getString(R.string.observation_time, observation.getTime()));
-        holder.getObservation().setText(activity.getString(R.string.text, observation.getObservation()));
         }
-
     }
 
     @Override

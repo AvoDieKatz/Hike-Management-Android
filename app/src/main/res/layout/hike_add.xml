@@ -146,11 +146,6 @@
             android:text="Hard" />
     </RadioGroup>
 
-<!--    <Spinner-->
-<!--        android:id="@+id/hikeDifficulty"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content" />-->
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="12dp" />
